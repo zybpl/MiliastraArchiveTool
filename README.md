@@ -63,7 +63,9 @@ flowchart TD
     F -->|仍未通过 / Still unsuccessful| H[记录诊断并中断 / Save diagnostics and interrupt]
 ```
 
-## 使用前准备
+## 使用前准备 / Before you start
+
+### 中文
 
 - 使用 Windows x64，并让游戏以**窗口模式**运行。建议从 **1920 × 1080** 分辨率开始测试，确保窗口完整可见。
 - 游戏界面目前适配**简体中文和英文**。存档介绍可配置 15 种语言；这与游戏界面语言是两个不同的设置。
@@ -76,7 +78,22 @@ flowchart TD
 
 完整操作说明见 [中英文用户手册（PDF，英文在前）](docs/user-guide-bilingual/MiliastraArchiveTool_User_Guide_EN_ZH.pdf)。手册基于较早版本整理，后续功能调整以当前程序和本 README 为准。
 
-## 本地数据
+### English
+
+- Use Windows x64 and run the game in **windowed mode**. **1920 × 1080** is the recommended starting resolution for testing. Keep the entire game window visible.
+- The game interface currently supports **Simplified Chinese and English**. Archive descriptions can be configured in 15 languages; archive content language and game interface language are separate settings.
+- Make sure the archive's default language matches the game language, and prepare the `.gil` archive and any required media files.
+- Start the task from the **Start Game screen** where possible. Preflight checks confirm the starting screen and language before proceeding.
+- Keep the game window visible during execution. Avoid manually using the mouse or keyboard or changing the clipboard.
+- **Allow time for the sandbox to start:** startup time varies between machines. Watch the tool's status and the game's loading progress. Do not switch pages simply because the tool has not clicked anything for a while.
+
+If a task is interrupted, read the message and resolve the issue while keeping the game on the corresponding page, then select **Continue**. Continuation supports recovery within a limited scope on the same page; it does not automatically reconstruct a scene that has been changed arbitrarily.
+
+For full instructions, see the [English/Chinese user guide (PDF, English first)](docs/user-guide-bilingual/MiliastraArchiveTool_User_Guide_EN_ZH.pdf). The guide was prepared for an earlier version; refer to the current application and this README for subsequent changes.
+
+## 本地数据 / Local data
+
+### 中文
 
 独立解压运行时，数据通常保存在程序目录下：
 
@@ -91,7 +108,24 @@ runtime-data/MiliastraArchiveTool/
 
 反馈问题时，请提供版本、游戏语言、分辨率、出现问题的步骤及对应诊断日志。分享前请检查日志和截图中的 UID、文件路径及存档内容等信息。
 
-## 从源码构建
+### English
+
+For a standalone extracted installation, data is normally stored under the application directory:
+
+```text
+runtime-data/MiliastraArchiveTool/
+├── archives/             # Archives, resources, and each archive's metadata.json
+├── logs/diagnostics/     # Diagnostic logs and screenshots
+└── upload-runs/          # Upload task run records
+```
+
+When running from a source checkout, the application searches parent directories for `MiliastraArchiveTool.sln` or a `.git` directory and uses `runtime-data` under that directory. Back up the entire `runtime-data` folder before upgrading.
+
+When reporting an issue, include the application version, game language, resolution, the step that failed, and the relevant diagnostic logs. Before sharing, review logs and screenshots for information such as your UID, file paths, and archive content.
+
+## 从源码构建 / Build from source
+
+### 中文
 
 需要 Windows 和 .NET 8 SDK。在仓库根目录执行：
 
@@ -102,10 +136,31 @@ dotnet build MiliastraArchiveTool/MiliastraArchiveTool.csproj -c Release
 
 运行时需要项目中的 YOLO、OCR 模型和模板资源，请保留这些资源的目录结构。依赖版本以 [项目文件](MiliastraArchiveTool/MiliastraArchiveTool.csproj) 为准。
 
-## 开源协议与致谢
+### English
+
+Windows and the .NET 8 SDK are required. Run these commands from the repository root:
+
+```powershell
+dotnet restore MiliastraArchiveTool/MiliastraArchiveTool.csproj
+dotnet build MiliastraArchiveTool/MiliastraArchiveTool.csproj -c Release
+```
+
+The application requires the YOLO and OCR models and template assets included in the project. Preserve their directory structure. Refer to the [project file](MiliastraArchiveTool/MiliastraArchiveTool.csproj) for dependency versions.
+
+## 开源协议与致谢 / License and acknowledgments
+
+### 中文
 
 本项目原创代码采用 **GNU Affero General Public License v3.0（AGPL-3.0-only）**，完整条款见 [LICENSE](LICENSE)。
 
 项目使用 Ultralytics YOLO、ONNX Runtime、RapidOcrNet / RapidOCR、OpenCvSharp 和 Vortice 等开源组件，感谢这些项目的维护者。第三方代码、模型及其依赖保留各自的许可证和版权声明；本项目的许可证不替代这些声明。[Ultralytics 的许可说明](https://www.ultralytics.com/license)涵盖其代码与训练模型的开源许可方式。
 
 游戏名称、截图及界面素材的相关权利归原权利人所有，不因本项目开源而转授。
+
+### English
+
+Original code in this project is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0-only)**. See [LICENSE](LICENSE) for the full terms.
+
+This project uses open-source components including Ultralytics YOLO, ONNX Runtime, RapidOcrNet / RapidOCR, OpenCvSharp, and Vortice. Thanks to their maintainers. Third-party code, models, and dependencies retain their own licenses and copyright notices; this project's license does not replace those notices. [Ultralytics' licensing information](https://www.ultralytics.com/license) describes its open-source licensing approach for code and trained models.
+
+Rights to game names, screenshots, and interface assets remain with their respective rights holders. Making this project open source does not grant rights to those materials.
