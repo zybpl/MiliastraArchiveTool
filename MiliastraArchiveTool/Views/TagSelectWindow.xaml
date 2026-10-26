@@ -1,0 +1,267 @@
+<Window x:Class="MiliastraArchiveTool.Views.TagSelectWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:infra="clr-namespace:MiliastraArchiveTool.Infrastructure"
+        Title="{Binding Loc[TagSelectTitle]}"
+        Width="940"
+        Height="720"
+        MinWidth="840"
+        MinHeight="560"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
+        Background="Transparent"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="CanResize">
+    <Window.Resources>
+        <Style TargetType="GroupBox">
+            <Setter Property="Margin" Value="12,10"/>
+            <Setter Property="Padding" Value="14"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="Width" Value="392"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Margin" Value="8,6"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Border x:Name="Pill"
+                                Background="White"
+                                BorderBrush="#C8D0DA"
+                                BorderThickness="1"
+                                CornerRadius="18"
+                                ClipToBounds="True"
+                                SnapsToDevicePixels="True">
+                            <Grid>
+                                <Ellipse x:Name="Dot"
+                                         Width="18"
+                                         Height="18"
+                                         Margin="11,0,0,0"
+                                         HorizontalAlignment="Left"
+                                         VerticalAlignment="Center"
+                                         Fill="#F1F5F9"
+                                         Stroke="#C8D0DA"/>
+                                <TextBlock x:Name="CheckMark"
+                                           Text="✓"
+                                           Width="18"
+                                           Height="18"
+                                           Margin="11,0,0,0"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Center"
+                                           TextAlignment="Center"
+                                           Foreground="White"
+                                           FontSize="12"
+                                           FontWeight="Bold"
+                                           Visibility="Collapsed"/>
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"
+                                                  RecognizesAccessKey="True"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Pill" Property="BorderBrush" Value="#8FB5FF"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Pill" Property="Background" Value="#444D73"/>
+                                <Setter TargetName="Pill" Property="BorderBrush" Value="#444D73"/>
+                                <Setter TargetName="Dot" Property="Fill" Value="#22C55E"/>
+                                <Setter TargetName="Dot" Property="Stroke" Value="#22C55E"/>
+                                <Setter TargetName="CheckMark" Property="Visibility" Value="Visible"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Pill" Property="Opacity" Value="0.55"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="RadioButton">
+            <Setter Property="Width" Value="392"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Margin" Value="8,6"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="Pill"
+                                Background="White"
+                                BorderBrush="#C8D0DA"
+                                BorderThickness="1"
+                                CornerRadius="18"
+                                ClipToBounds="True"
+                                SnapsToDevicePixels="True">
+                            <Grid>
+                                <Ellipse x:Name="Dot"
+                                         Width="18"
+                                         Height="18"
+                                         Margin="11,0,0,0"
+                                         HorizontalAlignment="Left"
+                                         VerticalAlignment="Center"
+                                         Fill="#F1F5F9"
+                                         Stroke="#C8D0DA"/>
+                                <TextBlock x:Name="CheckMark"
+                                           Text="✓"
+                                           Width="18"
+                                           Height="18"
+                                           Margin="11,0,0,0"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Center"
+                                           TextAlignment="Center"
+                                           Foreground="White"
+                                           FontSize="12"
+                                           FontWeight="Bold"
+                                           Visibility="Collapsed"/>
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"
+                                                  RecognizesAccessKey="True"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Pill" Property="BorderBrush" Value="#8FB5FF"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Pill" Property="Background" Value="#444D73"/>
+                                <Setter TargetName="Pill" Property="BorderBrush" Value="#444D73"/>
+                                <Setter TargetName="Dot" Property="Fill" Value="#22C55E"/>
+                                <Setter TargetName="Dot" Property="Stroke" Value="#22C55E"/>
+                                <Setter TargetName="CheckMark" Property="Visibility" Value="Visible"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Pill" Property="Opacity" Value="0.55"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="PrimaryDialogButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#2563EB"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        <Style x:Key="WindowCaptionButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Width" Value="38"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="#334155"/>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="{StaticResource SurfaceBrush}" CornerRadius="8" BorderBrush="{StaticResource BorderBrushSoft}" BorderThickness="1">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="58"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Background="Transparent" MouseLeftButtonDown="TitleBar_OnMouseLeftButtonDown">
+            <TextBlock Text="{Binding Loc[TagSelectTitle], Mode=OneWay}"
+                       FontSize="22"
+                       FontWeight="SemiBold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+            <Button Content="&#xE711;"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Margin="0,13,14,0"
+                    Style="{StaticResource WindowCaptionButton}"
+                    Click="Close_OnClick"/>
+        </Grid>
+
+        <ScrollViewer Grid.Row="1" Margin="14,0,14,0" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <GroupBox Header="{Binding Loc[PlayTypeGroup]}">
+                    <UniformGrid Columns="2">
+                        <RadioButton Content="{Binding Loc[Tag_LongTermPlay]}" GroupName="PlayType"
+                                     IsChecked="{Binding SelectedPlayType, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=长线游玩}"/>
+                        <RadioButton Content="{Binding Loc[Tag_CasualEnjoyment]}" GroupName="PlayType"
+                                     IsChecked="{Binding SelectedPlayType, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=轻量趣味}"/>
+                    </UniformGrid>
+                </GroupBox>
+
+                <GroupBox Header="{Binding Loc[DeviceGroup]}">
+                    <UniformGrid Columns="2">
+                        <CheckBox Content="{Binding Loc[KeyboardMouse]}" IsChecked="{Binding DeviceKeyboard}"/>
+                        <CheckBox Content="{Binding Loc[TouchScreen]}" IsChecked="{Binding DeviceTouch}"/>
+                        <CheckBox Content="{Binding Loc[Gamepad]}" IsChecked="{Binding DeviceGamepad}"/>
+                    </UniformGrid>
+                </GroupBox>
+
+                <GroupBox Header="{Binding Loc[GameplayGroup]}">
+                    <UniformGrid Columns="2">
+                        <RadioButton Content="{Binding Loc[Tag_ActionAdventure]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=动作冒险}"/>
+                        <RadioButton Content="{Binding Loc[Tag_SurvivalChallenge]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=生存竞技}"/>
+                        <RadioButton Content="{Binding Loc[Tag_FirstPersonShooter]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=第一人称射击}"/>
+                        <RadioButton Content="{Binding Loc[Tag_ManagementSimulation]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=模拟经营}"/>
+                        <RadioButton Content="{Binding Loc[Tag_CompetitiveMultiplayer]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=多人在线竞技}"/>
+                        <RadioButton Content="{Binding Loc[Tag_Roguelike]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=肉鸽}"/>
+                        <RadioButton Content="{Binding Loc[Tag_ThirdPersonShooter]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=第三人称射击}"/>
+                        <RadioButton Content="{Binding Loc[Tag_AsymmetricBattleArena]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=非对称竞技}"/>
+                        <RadioButton Content="{Binding Loc[Tag_BrawlStyle]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=乱斗}"/>
+                        <RadioButton Content="{Binding Loc[Tag_CoOpBattle]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=共斗}"/>
+                        <RadioButton Content="{Binding Loc[Tag_Party]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=派对}"/>
+                        <RadioButton Content="{Binding Loc[Tag_Collaboration]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=合作}"/>
+                        <RadioButton Content="{Binding Loc[Tag_Parkour]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=跑酷}"/>
+                        <RadioButton Content="{Binding Loc[Tag_ExplorationPuzzleSolving]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=探索解谜}"/>
+                        <RadioButton Content="{Binding Loc[Tag_SurvivalConstruction]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=生存建造}"/>
+                        <RadioButton Content="{Binding Loc[Tag_RolePlaying]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=角色扮演}"/>
+                        <RadioButton Content="{Binding Loc[Tag_Atmospheric]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=情景观赏}"/>
+                        <RadioButton Content="{Binding Loc[Tag_Strategy]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=战术策略}"/>
+                        <RadioButton Content="{Binding Loc[Tag_TowerDefense]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=塔防}"/>
+                        <RadioButton Content="{Binding Loc[Tag_Sports]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=体育}"/>
+                        <RadioButton Content="{Binding Loc[Tag_Racing]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=竞速}"/>
+                        <RadioButton Content="{Binding Loc[Tag_Tabletop]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=桌游}"/>
+                        <RadioButton Content="{Binding Loc[Tag_Idle]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=放置}"/>
+                        <RadioButton Content="{Binding Loc[Tag_MysterySuspense]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=悬疑惊悚}"/>
+                        <RadioButton Content="{Binding Loc[Tag_MusicRhythm]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=音乐节奏}"/>
+                        <RadioButton Content="{Binding Loc[Tag_CasualPuzzle]}" GroupName="Gameplay" IsChecked="{Binding SelectedGameplay, Converter={infra:RadioBoolToTextConverter}, ConverterParameter=休闲益智}"/>
+                    </UniformGrid>
+                </GroupBox>
+
+                <GroupBox Header="{Binding Loc[MoreTagsGroup]}">
+                    <StackPanel>
+                        <UniformGrid Columns="2">
+                            <CheckBox Content="{Binding Loc[Tag_FirstPerson]}" IsChecked="{Binding Extra1}"/>
+                            <CheckBox Content="{Binding Loc[Tag_ThirdPerson]}" IsChecked="{Binding Extra2}"/>
+                            <CheckBox Content="{Binding Loc[Tag_BirdsEyeView]}" IsChecked="{Binding Extra3}"/>
+                            <CheckBox Content="{Binding Loc[Tag_FixedCamera]}" IsChecked="{Binding Extra4}"/>
+                            <CheckBox Content="{Binding Loc[Tag_OverShoulderShot]}" IsChecked="{Binding Extra5}"/>
+                            <CheckBox Content="{Binding Loc[Tag_Casual]}" IsChecked="{Binding Extra6}"/>
+                            <CheckBox Content="{Binding Loc[Tag_Moderate]}" IsChecked="{Binding Extra7}"/>
+                            <CheckBox Content="{Binding Loc[Tag_Hard]}" IsChecked="{Binding Extra8}"/>
+                            <CheckBox Content="{Binding Loc[Tag_Hardcore]}" IsChecked="{Binding Extra9}"/>
+                            <CheckBox Content="{Binding Loc[Tag_DynamicDifficulty]}" IsChecked="{Binding Extra10}"/>
+                        </UniformGrid>
+                        <TextBlock Text="{Binding ExtraTip}" Margin="8" Foreground="#666"/>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="8,12,8,14">
+            <Button Content="{Binding Loc[Cancel]}" Width="90" Height="34" Margin="5" IsCancel="True" Command="{Binding CancelCommand}"/>
+            <Button Content="{Binding Loc[Confirm]}" Width="90" Height="34" Margin="5" IsDefault="True" Style="{StaticResource PrimaryDialogButton}" Command="{Binding ConfirmCommand}"/>
+        </StackPanel>
+    </Grid>
+    </Border>
+</Window>

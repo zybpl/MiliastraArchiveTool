@@ -1,0 +1,72 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>MiliastraArchiveTool</RootNamespace>
+    <AssemblyName>MiliastraArchiveTool</AssemblyName>
+    <Product>Miliastra Archive Tool</Product>
+    <ApplicationIcon />
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <DefaultItemExcludes>$(DefaultItemExcludes);publish\**\*</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.29.0" />
+    <PackageReference Include="OpenCvSharp4.Windows" Version="4.13.0.20260627" />
+    <PackageReference Include="RapidOcrNet" Version="4.0.2" />
+    <PackageReference Include="Vortice.Direct3D11" Version="3.8.3" />
+  </ItemGroup>
+
+  <ItemGroup Condition="Exists('C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Redist\MSVC\14.44.35112\x64\Microsoft.VC143.CRT\msvcp140.dll')">
+    <Content Include="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Redist\MSVC\14.44.35112\x64\Microsoft.VC143.CRT\msvcp140.dll">
+      <Link>msvcp140.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Redist\MSVC\14.44.35112\x64\Microsoft.VC143.CRT\vcruntime140.dll">
+      <Link>vcruntime140.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Redist\MSVC\14.44.35112\x64\Microsoft.VC143.CRT\vcruntime140_1.dll">
+      <Link>vcruntime140_1.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup Condition="Exists('$(NuGetPackageRoot)microsoft.ml.onnxruntime\1.29.0\runtimes\win-x64\native\onnxruntime.dll')">
+    <Content Include="$(NuGetPackageRoot)microsoft.ml.onnxruntime\1.29.0\runtimes\win-x64\native\onnxruntime.dll">
+      <Link>onnxruntime.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)microsoft.ml.onnxruntime\1.29.0\runtimes\win-x64\native\onnxruntime_providers_shared.dll">
+      <Link>onnxruntime_providers_shared.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Automation\Workflows\Assets\languages\*.png" />
+    <EmbeddedResource Include="Automation\Workflows\Assets\archive-editor-exit.png" />
+    <EmbeddedResource Include="Automation\Workflows\Assets\main-menu-exit.png" />
+    <EmbeddedResource Include="Automation\Workflows\Assets\text-edit-icon.png" />
+    <EmbeddedResource Include="Automation\Workflows\Assets\info-panel-edit-icon.png" />
+    <EmbeddedResource Include="Automation\Workflows\Assets\image-upload-failed.png" />
+    <EmbeddedResource Include="Automation\Workflows\Assets\image-view-action.png" />
+    <EmbeddedResource Include="Automation\Workflows\Assets\image-delete-action.png" />
+    <EmbeddedResource Include="Automation\Workflows\Assets\image-upload-action.png" />
+    <EmbeddedResource Include="Automation\Workflows\Assets\image-upload-1600-action.png" />
+    <None Include="Automation\Recognition\Yolo\Assets\stage1\**\*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Automation\Recognition\Ocr\Assets\rapidocr\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

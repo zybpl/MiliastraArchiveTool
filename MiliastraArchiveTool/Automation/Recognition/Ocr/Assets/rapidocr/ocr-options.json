@@ -1,0 +1,9 @@
+{
+  "Engine": "RapidOcrOnnx",
+  "ModelDirectory": "Automation/Recognition/Ocr/Assets/rapidocr",
+  "EnableRoiUpscale": false,
+  "RoiScale": 1,
+  "MinConfidence": 0.35,
+  "PreferRunCodeMatch": true
+}
+

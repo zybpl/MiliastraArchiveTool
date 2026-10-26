@@ -1,0 +1,265 @@
+<Window x:Class="MiliastraArchiveTool.Views.LocalizedDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:infra="clr-namespace:MiliastraArchiveTool.Infrastructure"
+        Title="{Binding Loc[LocalizedDetailsTitle], Mode=OneWay}"
+        Width="1120"
+        Height="680"
+        MinWidth="980"
+        MinHeight="600"
+        WindowStartupLocation="CenterOwner"
+        Background="Transparent"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="CanResize">
+    <Window.Resources>
+        <infra:BindingProxy x:Key="VmProxy" Data="{Binding}"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <Style x:Key="PrimaryDialogButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#1F2A44"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        <Style x:Key="ConfirmButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#2563EB"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        <Style x:Key="IconEditButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="#1F2937"/>
+        </Style>
+        <Style x:Key="DefaultBadge" TargetType="Border">
+            <Setter Property="Background" Value="#7EB34A"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="9,2"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="LocalizationColumnHeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Padding" Value="8,0"/>
+            <Setter Property="Background" Value="#D8D8D8"/>
+            <Setter Property="BorderBrush" Value="#C9CDD3"/>
+            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="LocalizationCellStyle" TargetType="DataGridCell">
+            <Setter Property="BorderBrush" Value="#D5D9DF"/>
+            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#E7EDF5"/>
+                    <Setter Property="Foreground" Value="#1F2937"/>
+                    <Setter Property="BorderBrush" Value="#C3CDDC"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="LocalizationRowStyle" TargetType="DataGridRow">
+            <Setter Property="Background" Value="White"/>
+            <Style.Triggers>
+                <Trigger Property="AlternationIndex" Value="1">
+                    <Setter Property="Background" Value="#EFEFEF"/>
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#E7EDF5"/>
+                    <Setter Property="Foreground" Value="#1F2937"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="{StaticResource SurfaceBrush}" CornerRadius="8" BorderBrush="{StaticResource BorderBrushSoft}" BorderThickness="1">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="62"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Background="Transparent" MouseLeftButtonDown="TitleBar_OnMouseLeftButtonDown">
+            <TextBlock Text="{Binding Loc[LocalizedDetailsTitle], Mode=OneWay}"
+                       FontSize="22"
+                       FontWeight="SemiBold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+            <Button Content="&#xE711;"
+                    Width="34"
+                    Height="30"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Margin="0,14,14,0"
+                    FontFamily="Segoe MDL2 Assets"
+                    FontSize="14"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Foreground="#334155"
+                    ToolTip="{Binding Loc[Cancel], Mode=OneWay}"
+                    Click="Close_OnClick"/>
+        </Grid>
+
+        <DataGrid Grid.Row="1"
+                  Margin="18,0,18,0"
+                  ItemsSource="{Binding Entries}"
+                  SelectedItem="{Binding SelectedEntry, Mode=TwoWay}"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  HeadersVisibility="Column"
+                  GridLinesVisibility="All"
+                  HorizontalGridLinesBrush="#D5D9DF"
+                  VerticalGridLinesBrush="#D5D9DF"
+                  AlternationCount="2"
+                  AlternatingRowBackground="#EFEFEF"
+                  RowBackground="White"
+                  RowHeight="50"
+                  HorizontalScrollBarVisibility="Auto"
+                  ColumnHeaderStyle="{StaticResource LocalizationColumnHeaderStyle}"
+                  CellStyle="{StaticResource LocalizationCellStyle}"
+                  RowStyle="{StaticResource LocalizationRowStyle}"
+                  FontSize="15">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Width="200">
+                    <DataGridTemplateColumn.Header>
+                        <TextBlock Text="{Binding Data.Loc[LanguageColumn], Source={StaticResource VmProxy}, Mode=OneWay}"/>
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Margin="6,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding LanguageName}" FontWeight="SemiBold" Foreground="#475569" VerticalAlignment="Center"/>
+                                    <Border Style="{StaticResource DefaultBadge}" Margin="10,0,0,0" Visibility="{Binding IsDefault, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                        <TextBlock Text="Default" Foreground="White" FontSize="12" FontWeight="SemiBold"/>
+                                    </Border>
+                                </StackPanel>
+                                <Button Grid.Column="1"
+                                        Content="&#xE74D;"
+                                        ToolTip="{Binding Data.Loc[RemoveSelectedLanguage], Source={StaticResource VmProxy}, Mode=OneWay}"
+                                        Style="{StaticResource IconEditButton}"
+                                        Foreground="#B91C1C"
+                                        Visibility="{Binding CanRemove, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                        Click="RemoveLanguage_OnClick"/>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="205">
+                    <DataGridTemplateColumn.Header>
+                        <TextBlock>
+                            <Run Text="{Binding Data.Loc[LevelName], Source={StaticResource VmProxy}, Mode=OneWay}"/>
+                            <Run Text=" *" Foreground="#DC2626"/>
+                        </TextBlock>
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding LevelName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     MaxLength="100"
+                                     Margin="6,7"
+                                     Height="32"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="185">
+                    <DataGridTemplateColumn.Header>
+                        <TextBlock Text="{Binding Data.Loc[GameplayDetailsColumn], Source={StaticResource VmProxy}, Mode=OneWay}"/>
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel Margin="6,0">
+                                <Button DockPanel.Dock="Right" Content="&#xE70F;" Style="{StaticResource IconEditButton}" Tag="GameDescription" Click="EditLongText_OnClick"/>
+                                <TextBlock Text="{Binding GameDescription}" Foreground="#9CA3AF" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="205">
+                    <DataGridTemplateColumn.Header>
+                        <TextBlock>
+                            <Run Text="{Binding Data.Loc[StageDescriptionColumn], Source={StaticResource VmProxy}, Mode=OneWay}"/>
+                            <Run Text=" *" Foreground="#DC2626"/>
+                        </TextBlock>
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel Margin="6,0">
+                                <Button DockPanel.Dock="Right" Content="&#xE70F;" Style="{StaticResource IconEditButton}" Tag="LevelDescription" Click="EditLongText_OnClick"/>
+                                <TextBlock Text="{Binding LevelDescription}" Foreground="#9CA3AF" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="205"
+                                        Visibility="{Binding Data.IsEarlyAccess, Source={StaticResource VmProxy}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <DataGridTemplateColumn.Header>
+                        <TextBlock>
+                            <Run Text="{Binding Data.Loc[EarlyAccessDescriptionRequired], Source={StaticResource VmProxy}, Mode=OneWay}"/>
+                        </TextBlock>
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel Margin="6,0">
+                                <Button DockPanel.Dock="Right" Content="&#xE70F;" Style="{StaticResource IconEditButton}" Tag="EarlyAccessDescription" Click="EditLongText_OnClick"/>
+                                <TextBlock Text="{Binding EarlyAccessDescription}" Foreground="#9CA3AF" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="180">
+                    <DataGridTemplateColumn.Header>
+                        <TextBlock Text="{Binding Data.Loc[UpdateLogColumn], Source={StaticResource VmProxy}, Mode=OneWay}"/>
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel Margin="6,0">
+                                <Button DockPanel.Dock="Right" Content="&#xE70F;" Style="{StaticResource IconEditButton}" Tag="VersionLog" Click="EditLongText_OnClick"/>
+                                <TextBlock Text="{Binding VersionLog}" Foreground="#9CA3AF" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DockPanel Grid.Row="2" Margin="18,18,18,18">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="{Binding Loc[AddLanguage], Mode=OneWay}"
+                        Width="220"
+                        Height="44"
+                        Margin="8,0"
+                        Style="{StaticResource PrimaryDialogButton}"
+                        Click="AddLanguage_OnClick"/>
+                <Button Content="{Binding Loc[Confirm], Mode=OneWay}"
+                        Width="110"
+                        Height="40"
+                        Margin="8,0"
+                        Style="{StaticResource ConfirmButton}"
+                        Command="{Binding ConfirmCommand}"/>
+                <Button Content="{Binding Loc[Cancel], Mode=OneWay}"
+                        Width="100"
+                        Height="40"
+                        Margin="8,0,0,0"
+                        Command="{Binding CancelCommand}"/>
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+    </Border>
+</Window>

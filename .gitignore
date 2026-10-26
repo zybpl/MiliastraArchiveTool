@@ -1,0 +1,27 @@
+# Local builds and IDE state
+**/bin/
+**/obj/
+.vs/
+*.user
+*.suo
+_build_check/
+_scratch/
+.codex_tmp/
+.venv*/
+publish/
+
+# Personal archives, diagnostics, and local training captures
+runtime-data/
+Log/
+data/
+
+# Unrelated prototype projects and base training weights
+WpfApp1/
+WpfApp1.sln
+/yolo*.pt
+
+# Secrets and machine-local settings
+.env
+.env.*
+*.pfx
+*.key

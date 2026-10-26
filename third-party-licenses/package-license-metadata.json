@@ -1,0 +1,166 @@
+[
+  {
+    "package": "Clipper2/2.0.0",
+    "license": "License.txt",
+    "licenseUrl": "https://aka.ms/deprecateLicenseUrl",
+    "projectUrl": "https://www.angusj.com/clipper2/Docs/Overview.htm",
+    "copyright": "Copyright © 2010-2025"
+  },
+  {
+    "package": "Microsoft.ML.OnnxRuntime/1.29.0",
+    "license": "LICENSE",
+    "licenseUrl": "https://aka.ms/deprecateLicenseUrl",
+    "projectUrl": "https://github.com/Microsoft/onnxruntime",
+    "copyright": "© Microsoft Corporation. All rights reserved."
+  },
+  {
+    "package": "Microsoft.ML.OnnxRuntime.Managed/1.29.0",
+    "license": "LICENSE.txt",
+    "licenseUrl": "https://aka.ms/deprecateLicenseUrl",
+    "projectUrl": "https://github.com/Microsoft/onnxruntime",
+    "copyright": "© Microsoft Corporation. All rights reserved."
+  },
+  {
+    "package": "Microsoft.Win32.SystemEvents/10.0.9",
+    "license": "MIT",
+    "licenseUrl": "https://licenses.nuget.org/MIT",
+    "projectUrl": "https://dot.net/",
+    "copyright": "© Microsoft Corporation. All rights reserved."
+  },
+  {
+    "package": "OpenCvSharp4/4.13.0.20260627",
+    "license": "Apache-2.0",
+    "licenseUrl": "https://licenses.nuget.org/Apache-2.0",
+    "projectUrl": "https://github.com/shimat/opencvsharp",
+    "copyright": "Copyright 2008-2026"
+  },
+  {
+    "package": "OpenCvSharp4.runtime.win/4.13.0.20260627",
+    "license": "Apache-2.0",
+    "licenseUrl": "https://licenses.nuget.org/Apache-2.0",
+    "projectUrl": "https://github.com/shimat/opencvsharp",
+    "copyright": "Copyright 2008-2026"
+  },
+  {
+    "package": "OpenCvSharp4.Windows/4.13.0.20260627",
+    "license": "Apache-2.0",
+    "licenseUrl": "https://licenses.nuget.org/Apache-2.0",
+    "projectUrl": "https://github.com/shimat/opencvsharp",
+    "copyright": "Copyright 2008-2026"
+  },
+  {
+    "package": "OpenCvSharp4.WpfExtensions/4.13.0.20260627",
+    "license": "Apache-2.0",
+    "licenseUrl": "https://licenses.nuget.org/Apache-2.0",
+    "projectUrl": "https://github.com/shimat/opencvsharp",
+    "copyright": "Copyright 2008-2026"
+  },
+  {
+    "package": "RapidOcrNet/4.0.2",
+    "license": "Apache-2.0",
+    "licenseUrl": "https://licenses.nuget.org/Apache-2.0",
+    "projectUrl": "https://github.com/BobLd/RapidOcrNet"
+  },
+  {
+    "package": "SharpGen.Runtime/2.4.2-beta",
+    "license": "MIT",
+    "licenseUrl": "https://licenses.nuget.org/MIT",
+    "projectUrl": "https://github.com/SharpGenTools/SharpGenTools",
+    "copyright": "(c) 2010-2017 Alexandre Mutel, 2017-2023 Jeremy Koritzinsky, 2023-2024 Amer Koleci"
+  },
+  {
+    "package": "SharpGen.Runtime.COM/2.4.2-beta",
+    "license": "MIT",
+    "licenseUrl": "https://licenses.nuget.org/MIT",
+    "projectUrl": "https://github.com/SharpGenTools/SharpGenTools",
+    "copyright": "(c) 2010-2017 Alexandre Mutel, 2017-2023 Jeremy Koritzinsky, 2023-2024 Amer Koleci"
+  },
+  {
+    "package": "SkiaSharp/3.119.1",
+    "license": "MIT",
+    "licenseUrl": "https://licenses.nuget.org/MIT",
+    "projectUrl": "https://go.microsoft.com/fwlink/?linkid=868515",
+    "copyright": "© Microsoft Corporation. All rights reserved."
+  },
+  {
+    "package": "SkiaSharp.NativeAssets.Linux.NoDependencies/3.119.1",
+    "license": "MIT",
+    "licenseUrl": "https://licenses.nuget.org/MIT",
+    "projectUrl": "https://go.microsoft.com/fwlink/?linkid=868515",
+    "copyright": "© Microsoft Corporation. All rights reserved."
+  },
+  {
+    "package": "SkiaSharp.NativeAssets.Win32/3.119.1",
+    "license": "MIT",
+    "licenseUrl": "https://licenses.nuget.org/MIT",
+    "projectUrl": "https://go.microsoft.com/fwlink/?linkid=868515",
+    "copyright": "© Microsoft Corporation. All rights reserved."
+  },
+  {
+    "package": "System.Drawing.Common/10.0.9",
+    "license": "MIT",
+    "licenseUrl": "https://licenses.nuget.org/MIT",
+    "projectUrl": "https://github.com/dotnet/winforms",
+    "copyright": "© Microsoft Corporation. All rights reserved."
+  },
+  {
+    "package": "System.IO.Pipelines/9.0.1",
+    "license": "MIT",
+    "licenseUrl": "https://licenses.nuget.org/MIT",
+    "projectUrl": "https://dot.net/",
+    "copyright": "© Microsoft Corporation. All rights reserved."
+  },
+  {
+    "package": "System.Memory/4.6.3",
+    "license": "MIT",
+    "licenseUrl": "https://licenses.nuget.org/MIT",
+    "projectUrl": "https://github.com/dotnet/maintenance-packages",
+    "copyright": "© Microsoft Corporation. All rights reserved."
+  },
+  {
+    "package": "System.Numerics.Tensors/9.0.0",
+    "license": "MIT",
+    "licenseUrl": "https://licenses.nuget.org/MIT",
+    "projectUrl": "https://dot.net/",
+    "copyright": "© Microsoft Corporation. All rights reserved."
+  },
+  {
+    "package": "System.Text.Encodings.Web/9.0.1",
+    "license": "MIT",
+    "licenseUrl": "https://licenses.nuget.org/MIT",
+    "projectUrl": "https://dot.net/",
+    "copyright": "© Microsoft Corporation. All rights reserved."
+  },
+  {
+    "package": "System.Text.Json/9.0.1",
+    "license": "MIT",
+    "licenseUrl": "https://licenses.nuget.org/MIT",
+    "projectUrl": "https://dot.net/",
+    "copyright": "© Microsoft Corporation. All rights reserved."
+  },
+  {
+    "package": "Vortice.Direct3D11/3.8.3",
+    "license": "MIT",
+    "licenseUrl": "https://licenses.nuget.org/MIT",
+    "copyright": "Copyright (c) Amer Koleci and Contributors"
+  },
+  {
+    "package": "Vortice.DirectX/3.8.3",
+    "license": "MIT",
+    "licenseUrl": "https://licenses.nuget.org/MIT",
+    "copyright": "Copyright (c) Amer Koleci and Contributors"
+  },
+  {
+    "package": "Vortice.DXGI/3.8.3",
+    "license": "MIT",
+    "licenseUrl": "https://licenses.nuget.org/MIT",
+    "copyright": "Copyright (c) Amer Koleci and Contributors"
+  },
+  {
+    "package": "Vortice.Mathematics/2.1.0",
+    "license": "MIT",
+    "licenseUrl": "https://licenses.nuget.org/MIT",
+    "projectUrl": "https://github.com/amerkoleci/Vortice.Mathematics",
+    "copyright": "Copyright (c) Amer Koleci and Contributors"
+  }
+]

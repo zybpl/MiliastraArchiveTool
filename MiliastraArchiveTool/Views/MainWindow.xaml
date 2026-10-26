@@ -1,0 +1,699 @@
+<Window x:Class="MiliastraArchiveTool.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:infra="clr-namespace:MiliastraArchiveTool.Infrastructure"
+        xmlns:viewModels="clr-namespace:MiliastraArchiveTool.ViewModels"
+        Title="{Binding Loc[WindowTitle]}"
+        Height="820"
+        Width="1120"
+        MinHeight="720"
+        MinWidth="1000"
+        FontSize="13"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="CanResize">
+    <Window.DataContext>
+        <viewModels:MainViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <infra:BindingProxy x:Key="VmProxy" Data="{Binding}"/>
+        <infra:RequiredFieldBrushConverter x:Key="RequiredFieldBrushConverter"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <Style x:Key="GroupBoxCard" TargetType="GroupBox">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style x:Key="OperateButton" TargetType="Button">
+            <Setter Property="Width" Value="110"/>
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Margin" Value="6"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Chrome"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="7">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Chrome" Property="Opacity" Value="0.88"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Chrome" Property="Opacity" Value="0.76"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Chrome" Property="Opacity" Value="0.45"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="PrimaryOperateButton" TargetType="Button" BasedOn="{StaticResource OperateButton}">
+            <Setter Property="Background" Value="#2563EB"/>
+        </Style>
+        <Style x:Key="SuccessOperateButton" TargetType="Button" BasedOn="{StaticResource OperateButton}">
+            <Setter Property="Background" Value="#0F766E"/>
+        </Style>
+        <Style x:Key="DangerOperateButton" TargetType="Button" BasedOn="{StaticResource OperateButton}">
+            <Setter Property="Background" Value="#DC2626"/>
+        </Style>
+        <Style x:Key="WindowCaptionButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Width" Value="42"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="#334155"/>
+        </Style>
+        <Style x:Key="FormLabel" TargetType="Label">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+        <Style x:Key="ResourceFormLabel" TargetType="Label" BasedOn="{StaticResource FormLabel}">
+            <Setter Property="ContentTemplate">
+                <Setter.Value><DataTemplate><TextBlock Text="{Binding}" TextWrapping="Wrap" MaxWidth="140"/></DataTemplate></Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="RequiredDot" TargetType="TextBlock">
+            <Setter Property="Text" Value="*"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Width" Value="14"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="-8,0,6,0"/>
+            <Setter Property="ToolTip" Value="Required field"/>
+        </Style>
+        <Style x:Key="InputCtrl" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Padding" Value="6,3"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+        <Style x:Key="SmallPrimaryButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#E8F1FF"/>
+            <Setter Property="BorderBrush" Value="#93B7F4"/>
+            <Setter Property="Foreground" Value="#174EA6"/>
+        </Style>
+        <Style x:Key="SmallInfoButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#ECFEFF"/>
+            <Setter Property="BorderBrush" Value="#67D5E8"/>
+            <Setter Property="Foreground" Value="#0E7490"/>
+        </Style>
+        <Style x:Key="SmallDangerButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#FEF2F2"/>
+            <Setter Property="BorderBrush" Value="#FCA5A5"/>
+            <Setter Property="Foreground" Value="#B91C1C"/>
+        </Style>
+        <Style x:Key="IconPrimaryButton" TargetType="Button" BasedOn="{StaticResource SmallPrimaryButton}">
+            <Setter Property="Width" Value="34"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style x:Key="IconInfoButton" TargetType="Button" BasedOn="{StaticResource SmallInfoButton}">
+            <Setter Property="Width" Value="34"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style x:Key="IconDangerButton" TargetType="Button" BasedOn="{StaticResource SmallDangerButton}">
+            <Setter Property="Width" Value="34"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style x:Key="CenteredCellText" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="TabItem">
+            <Setter Property="MinWidth" Value="112"/>
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Margin" Value="4,2,0,3"/>
+            <Setter Property="Padding" Value="18,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border x:Name="Chrome"
+                                Background="Transparent"
+                                BorderBrush="#C7D2E1"
+                                BorderThickness="1"
+                                CornerRadius="8">
+                            <ContentPresenter ContentSource="Header"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Chrome" Property="BorderBrush" Value="#8FB5FF"/>
+                                <Setter Property="Foreground" Value="#174EA6"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Chrome" Property="Background" Value="#F8FAFC"/>
+                                <Setter TargetName="Chrome" Property="BorderBrush" Value="#2563EB"/>
+                                <Setter Property="Foreground" Value="#174EA6"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="TabControl">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabControl">
+                        <Grid KeyboardNavigation.TabNavigation="Local">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TabPanel Grid.Row="0"
+                                      Panel.ZIndex="1"
+                                      IsItemsHost="True"
+                                      KeyboardNavigation.TabIndex="1"
+                                      Background="Transparent"/>
+                            <ContentPresenter Grid.Row="1"
+                                              ContentSource="SelectedContent"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="{StaticResource SurfaceBrush}" CornerRadius="8" BorderBrush="{StaticResource BorderBrushSoft}" BorderThickness="1">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="38"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Background="Transparent" MouseLeftButtonDown="TitleBar_OnMouseLeftButtonDown">
+            <TextBlock Text="{Binding Loc[WindowTitle], Mode=OneWay}"
+                       Margin="14,0,0,0"
+                       VerticalAlignment="Center"
+                       Foreground="#1F2937"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="&#xE921;" Style="{StaticResource WindowCaptionButton}" Click="Minimize_OnClick"/>
+                <Button Content="&#xE922;" Style="{StaticResource WindowCaptionButton}" Click="MaximizeRestore_OnClick"/>
+                <Button Content="&#xE711;" Style="{StaticResource WindowCaptionButton}" Click="Close_OnClick"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1">
+        <TabControl FontSize="15" Background="{StaticResource SurfaceBrush}">
+        <TabItem Header="{Binding Loc[BasicTab]}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="70"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="320"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <GroupBox Header="{Binding Loc[ArchiveList]}" Style="{StaticResource GroupBoxCard}" Grid.Row="0" Grid.Column="0">
+                    <DataGrid ItemsSource="{Binding LevelArchiveList}"
+                              SelectedItem="{Binding SelectedArchive, Mode=TwoWay}"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              RowHeaderWidth="0"
+                              HorizontalScrollBarVisibility="Disabled">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Index}" Width="58" ElementStyle="{StaticResource CenteredCellText}">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="{Binding Data.Loc[Index], Source={StaticResource VmProxy}}"/>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding LevelName}" Width="*">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="{Binding Data.Loc[LevelName], Source={StaticResource VmProxy}}"/>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
+
+                <GroupBox Header="{Binding Loc[Details]}" Style="{StaticResource GroupBoxCard}" Grid.Row="0" Grid.Column="1" IsEnabled="{Binding CanEditDuringUpload}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="5">
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <Label Style="{StaticResource FormLabel}" Content="{Binding Loc[ArchiveFile]}"/>
+                                <TextBlock Style="{StaticResource RequiredDot}"
+                                           Foreground="{Binding SelectedArchive.ArchiveFileName, Converter={StaticResource RequiredFieldBrushConverter}}"/>
+                                <TextBox Style="{StaticResource InputCtrl}" Width="320" IsReadOnly="True"
+                                         Text="{Binding SelectedArchive.ArchiveFileName, Mode=OneWay}"/>
+                                <Button Content="&#xE721;" ToolTip="{Binding Loc[SelectArchive]}" Margin="10,0,0,0" Style="{StaticResource IconPrimaryButton}"
+                                        Command="{Binding SelectResourceCommand}" CommandParameter="Archive"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <Label Style="{StaticResource FormLabel}" Content="{Binding Loc[LevelName]}"/>
+                                <TextBlock Style="{StaticResource RequiredDot}"
+                                           Foreground="{Binding SelectedArchive.LevelName, Converter={StaticResource RequiredFieldBrushConverter}}"/>
+                                <TextBox Style="{StaticResource InputCtrl}" Width="420"
+                                         Text="{Binding SelectedArchive.LevelName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <Label Style="{StaticResource FormLabel}" Content="{Binding Loc[ArchiveDefaultLanguage]}"/>
+                                <ComboBox Width="180" ItemsSource="{x:Static viewModels:LocalizedDetailsViewModel.DefaultLanguages}"
+                                          DisplayMemberPath="Name" SelectedValuePath="Code"
+                                          SelectedValue="{Binding SelectedArchive.DefaultLanguage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <Label Style="{StaticResource FormLabel}" Content="{Binding Loc[LevelCover]}"/>
+                                <TextBlock Style="{StaticResource RequiredDot}"
+                                           Foreground="{Binding SelectedArchive.LevelCoverPath, Converter={StaticResource RequiredFieldBrushConverter}}"/>
+                                <Button Content="&#xE721;" ToolTip="{Binding Loc[SelectImage]}" Style="{StaticResource IconPrimaryButton}" Command="{Binding SelectResourceCommand}" CommandParameter="LevelCover"/>
+                                <Button Content="&#xE890;" ToolTip="{Binding Loc[Preview]}" Margin="6,0,0,0" Style="{StaticResource IconInfoButton}" Command="{Binding PreviewResourceCommand}" CommandParameter="LevelCover"/>
+                                <Button Content="&#xE74D;" ToolTip="{Binding Loc[Remove]}" Margin="6,0,0,0" Style="{StaticResource IconDangerButton}" Command="{Binding DeleteResourceCommand}" CommandParameter="LevelCover"/>
+                                <TextBlock Margin="10,0" Foreground="#666" Text="{Binding SelectedArchive.LevelCoverPath, Mode=OneWay}"/>
+                            </StackPanel>
+
+                            <Separator Margin="0,8"/>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <Label Style="{StaticResource FormLabel}" Content="{Binding Loc[GameplayDescription]}"/>
+                                <TextBlock Style="{StaticResource RequiredDot}"
+                                           Foreground="{Binding SelectedArchive.GameDescription, Converter={StaticResource RequiredFieldBrushConverter}}"/>
+                                <TextBox Style="{StaticResource InputCtrl}" Width="450" TextWrapping="Wrap" MaxLength="400"
+                                         Text="{Binding SelectedArchive.GameDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <Label Style="{StaticResource FormLabel}" VerticalAlignment="Top" Content="{Binding Loc[LevelDescription]}"/>
+                                <TextBlock Style="{StaticResource RequiredDot}"
+                                           VerticalAlignment="Top"
+                                           Margin="-8,7,6,0"
+                                           Foreground="{Binding SelectedArchive.LevelDescription, Converter={StaticResource RequiredFieldBrushConverter}}"/>
+                                <TextBox Style="{StaticResource InputCtrl}" Width="450" Height="60" AcceptsReturn="True" TextWrapping="Wrap" MaxLength="10000"
+                                         VerticalContentAlignment="Top"
+                                         Text="{Binding SelectedArchive.LevelDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,4">
+                                <Label Style="{StaticResource FormLabel}" Content="{Binding Loc[EarlyAccess]}"/>
+                                <CheckBox Content="{Binding Loc[PublishEarlyAccess]}"
+                                          IsChecked="{Binding SelectedArchive.IsEarlyAccess, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <Label Style="{StaticResource FormLabel}" VerticalAlignment="Top" Content="{Binding Loc[EarlyAccessDescription]}"/>
+                                <TextBlock Style="{StaticResource RequiredDot}"
+                                           VerticalAlignment="Top"
+                                           Margin="-8,7,6,0"
+                                           Visibility="{Binding SelectedArchive.IsEarlyAccess, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                           Foreground="{Binding SelectedArchive.EarlyAccessDescription, Converter={StaticResource RequiredFieldBrushConverter}}"/>
+                                <TextBox Style="{StaticResource InputCtrl}" Width="450" Height="60" AcceptsReturn="True" TextWrapping="Wrap" MaxLength="400"
+                                         VerticalContentAlignment="Top"
+                                         IsEnabled="{Binding SelectedArchive.IsEarlyAccess}"
+                                         ToolTip="{Binding Loc[EarlyAccessHint]}"
+                                         Text="{Binding SelectedArchive.EarlyAccessDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+
+                            <Separator Margin="0,10"/>
+                            <TextBlock FontSize="13" FontWeight="SemiBold" Margin="0,0,0,6" Text="{Binding Loc[ImageResources]}"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <Label Style="{StaticResource ResourceFormLabel}" Content="{Binding Loc[MainImage]}"/>
+                                <TextBlock Width="12"/>
+                                <Button Content="&#xE721;" ToolTip="{Binding Loc[SelectImage]}" Style="{StaticResource IconPrimaryButton}" Command="{Binding SelectResourceCommand}" CommandParameter="MainImage"/>
+                                <Button Content="&#xE890;" ToolTip="{Binding Loc[Preview]}" Margin="6,0,0,0" Style="{StaticResource IconInfoButton}" Command="{Binding PreviewResourceCommand}" CommandParameter="MainImage"/>
+                                <Button Content="&#xE74D;" ToolTip="{Binding Loc[Remove]}" Margin="6,0,0,0" Style="{StaticResource IconDangerButton}" Command="{Binding DeleteResourceCommand}" CommandParameter="MainImage"/>
+                                <TextBlock Margin="10,0" Foreground="#666" Text="{Binding SelectedArchive.MainImagePath, Mode=OneWay}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <Label Style="{StaticResource ResourceFormLabel}" Content="{Binding Loc[AchievementIcon]}"/>
+                                <TextBlock Width="12"/>
+                                <Button Content="&#xE721;" ToolTip="{Binding Loc[SelectIcon]}" Style="{StaticResource IconPrimaryButton}" Command="{Binding SelectResourceCommand}" CommandParameter="AchievementIcon"/>
+                                <Button Content="&#xE890;" ToolTip="{Binding Loc[Preview]}" Margin="6,0,0,0" Style="{StaticResource IconInfoButton}" Command="{Binding PreviewResourceCommand}" CommandParameter="AchievementIcon"/>
+                                <Button Content="&#xE74D;" ToolTip="{Binding Loc[Remove]}" Margin="6,0,0,0" Style="{StaticResource IconDangerButton}" Command="{Binding DeleteResourceCommand}" CommandParameter="AchievementIcon"/>
+                                <TextBlock Margin="10,0" Foreground="#666" Text="{Binding SelectedArchive.AchievementIconPath, Mode=OneWay}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <Label Style="{StaticResource ResourceFormLabel}" Content="{Binding Loc[LuxuryGiftIcon]}"/>
+                                <CheckBox Margin="12,0" VerticalAlignment="Center" IsChecked="{Binding SelectedArchive.SubmitLuxuryGiftIcon, Mode=TwoWay}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <Label Style="{StaticResource ResourceFormLabel}" Content="{Binding Loc[ColorfulGiftIcon]}"/>
+                                <CheckBox Margin="12,0" VerticalAlignment="Center" IsChecked="{Binding SelectedArchive.SubmitColorfulGiftIcon, Mode=TwoWay}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <Label Style="{StaticResource ResourceFormLabel}" Content="{Binding Loc[QuestGiftIcon]}"/>
+                                <CheckBox Margin="12,0" VerticalAlignment="Center" IsChecked="{Binding SelectedArchive.SubmitQuestGiftIcon, Mode=TwoWay}"/>
+                            </StackPanel>
+
+                            <Separator Margin="0,10"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <Label Style="{StaticResource FormLabel}" Content="{Binding Loc[LevelTags]}"/>
+                                <TextBlock Style="{StaticResource RequiredDot}"
+                                           Foreground="{Binding SelectedArchive.Tags, Converter={StaticResource RequiredFieldBrushConverter}}"/>
+                                <TextBox Style="{StaticResource InputCtrl}" Width="360" ToolTip="{Binding Loc[TagHint]}"
+                                         IsReadOnly="True"
+                                         Text="{Binding SelectedArchive.LocalizedTags, Mode=OneWay}"/>
+                                <Button Content="&#xE721;" ToolTip="{Binding Loc[SelectTags]}" Margin="10,0,0,0" Style="{StaticResource IconPrimaryButton}" Command="{Binding OpenTagSelectorCommand}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <Label Style="{StaticResource FormLabel}" VerticalAlignment="Top" Content="{Binding Loc[VersionLog]}"/>
+                                <TextBlock Width="12"/>
+                                <TextBox Style="{StaticResource InputCtrl}" Width="450" Height="50" AcceptsReturn="True" MaxLength="1000"
+                                         VerticalContentAlignment="Top"
+                                         Text="{Binding SelectedArchive.VersionLog, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <Label Style="{StaticResource FormLabel}" Content="{Binding Loc[LocalizedDetails]}"/>
+                                <TextBlock Width="12"/>
+                                <Button Content="{Binding Loc[OpenLocalizationEditor]}" Width="190" Height="28" Style="{StaticResource SmallInfoButton}" Command="{Binding OpenLocalizedDetailsCommand}"/>
+                                <TextBlock Margin="10,0" Foreground="#666" Text="{Binding SelectedArchive.MultiLanguageSummary, Mode=OneWay}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <Label Style="{StaticResource FormLabel}" Content="{Binding Loc[ExtraImages]}"/>
+                                <TextBlock Width="12"/>
+                                <Button Content="{Binding Loc[AddImages]}" Width="120" Height="28" Style="{StaticResource SmallPrimaryButton}" Command="{Binding SelectResourceCommand}" CommandParameter="ExtraImages"/>
+                                <Button Content="{Binding Loc[ViewImages]}" Width="90" Height="28" Margin="8,0,0,0" Style="{StaticResource SmallInfoButton}" Command="{Binding OpenExtraImagesCommand}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <Label Style="{StaticResource FormLabel}" Content="{Binding Loc[Video]}"/>
+                                <TextBlock Width="12"/>
+                                <Button Content="&#xE721;" ToolTip="{Binding Loc[SelectVideo]}" Style="{StaticResource IconPrimaryButton}" Command="{Binding SelectResourceCommand}" CommandParameter="Video"/>
+                                <Button Content="&#xE890;" ToolTip="{Binding Loc[Preview]}" Margin="8,0,0,0" Style="{StaticResource IconInfoButton}" Command="{Binding PreviewResourceCommand}" CommandParameter="Video"/>
+                                <Button Content="&#xE74D;" ToolTip="{Binding Loc[Remove]}" Margin="8,0,0,0" Style="{StaticResource IconDangerButton}" Command="{Binding DeleteResourceCommand}" CommandParameter="Video"/>
+                                <TextBlock Margin="10,0" Foreground="#666" Text="{Binding SelectedArchive.VideoPath, Mode=OneWay}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </GroupBox>
+
+                <DockPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="#EEF2F7">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Bottom">
+                        <Button Content="{Binding Loc[SaveArchive]}" Style="{StaticResource PrimaryOperateButton}" Command="{Binding SaveArchiveCommand}"/>
+                        <Button Content="{Binding Loc[AddLevel]}" Style="{StaticResource SuccessOperateButton}" Command="{Binding AddArchiveCommand}"/>
+                        <Button Content="{Binding Loc[DeleteSelected]}" Style="{StaticResource DangerOperateButton}" Command="{Binding DeleteArchiveCommand}"/>
+                    </StackPanel>
+                </DockPanel>
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="{Binding Loc[UploadTab]}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="1.5*"/>
+                    <RowDefinition Height="300"/>
+                </Grid.RowDefinitions>
+
+                <GroupBox Header="{Binding Loc[UploadList]}" Style="{StaticResource GroupBoxCard}" Grid.Row="0">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0"
+                                    IsEnabled="{Binding CanEditDuringUpload}">
+                            <Button Content="{Binding Loc[RefreshUploadList]}" Width="160" Height="28" Margin="4,0" Command="{Binding RefreshUploadListCommand}"/>
+                            <Button Content="{Binding Loc[SelectAllUploads]}" Width="110" Height="28" Margin="4,0" Command="{Binding SelectAllUploadsCommand}"/>
+                            <Button Content="{Binding Loc[ClearUploadSelection]}" Width="145" Height="28" Margin="4,0" Command="{Binding ClearUploadSelectionCommand}"/>
+                        </StackPanel>
+                        <DataGrid ItemsSource="{Binding UploadTaskList}" SelectedItem="{Binding SelectedUploadTask, Mode=TwoWay}"
+                                  AutoGenerateColumns="False" IsReadOnly="False" CanUserAddRows="False" CanUserDeleteRows="False"
+                                  IsEnabled="{Binding CanEditDuringUpload}">
+                            <DataGrid.Columns>
+                                <DataGridCheckBoxColumn Binding="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="60">
+                                    <DataGridCheckBoxColumn.Header>
+                                        <TextBlock Text="{Binding Data.Loc[Select], Source={StaticResource VmProxy}}"/>
+                                    </DataGridCheckBoxColumn.Header>
+                                </DataGridCheckBoxColumn>
+                                <DataGridTextColumn Binding="{Binding UploadIndex}" IsReadOnly="True" Width="60">
+                                    <DataGridTextColumn.Header>
+                                        <TextBlock Text="{Binding Data.Loc[Index], Source={StaticResource VmProxy}}"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding UploadTitle}" IsReadOnly="True" Width="300">
+                                    <DataGridTextColumn.Header>
+                                        <TextBlock Text="{Binding Data.Loc[ArchiveTitle], Source={StaticResource VmProxy}}"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding UploadState}" IsReadOnly="True" Width="140">
+                                    <DataGridTextColumn.Header>
+                                        <TextBlock Text="{Binding Data.Loc[UploadState], Source={StaticResource VmProxy}}"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding AttemptCount}" IsReadOnly="True" Width="80">
+                                    <DataGridTextColumn.Header>
+                                        <TextBlock Text="{Binding Data.Loc[Attempts], Source={StaticResource VmProxy}}"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding DurationText}" IsReadOnly="True" Width="80">
+                                    <DataGridTextColumn.Header>
+                                        <TextBlock Text="{Binding Data.Loc[Duration], Source={StaticResource VmProxy}}"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding ErrorMessage}" IsReadOnly="True" Width="*">
+                                    <DataGridTextColumn.Header>
+                                        <TextBlock Text="{Binding Data.Loc[ErrorMessage], Source={StaticResource VmProxy}}"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                </GroupBox>
+
+                <GroupBox Header="{Binding Loc[Info]}" Style="{StaticResource GroupBoxCard}" Grid.Row="1">
+                    <ListBox x:Name="UploadLogList" ItemsSource="{Binding UploadLogEntries}" FontFamily="Consolas" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock TextWrapping="Wrap" Foreground="{Binding ForegroundBrush}">
+                                    <Run Text="{Binding TimeText, Mode=OneWay}"/>
+                                    <Run Text=" ["/>
+                                    <Run Text="{Binding LevelText, Mode=OneWay}"/>
+                                    <Run Text="] "/>
+                                    <Run Text="{Binding Message, Mode=OneWay}"/>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </GroupBox>
+
+                <GroupBox Header="{Binding Loc[UploadTab]}" Style="{StaticResource GroupBoxCard}" Grid.Row="2">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="360"/>
+                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="250"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" VerticalAlignment="Top" Margin="0,20,0,0" IsEnabled="{Binding CanEditDuringUpload}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="116"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Row="0" Grid.Column="0" FontSize="12" VerticalContentAlignment="Center" Content="{Binding Loc[UploadMode]}"/>
+                            <ComboBox Grid.Row="0"
+                                      Grid.Column="1"
+                                      Width="210"
+                                      Height="28"
+                                      FontSize="12"
+                                      HorizontalAlignment="Left"
+                                      SelectedValuePath="Tag"
+                                      SelectedValue="{Binding SelectedUploadModeKey, Mode=TwoWay}">
+                                <ComboBoxItem Tag="NewArchive" Content="{Binding Loc[NewArchiveUpload]}"/>
+                                <ComboBoxItem Tag="UpdateExistingArchive" Content="{Binding Loc[UpdateExistingArchive]}"/>
+                            </ComboBox>
+
+                            <Label Grid.Row="1" Grid.Column="0" FontSize="12" VerticalContentAlignment="Center" Margin="0,6,0,0" Content="{Binding Loc[ExistingArchiveIdentifier]}"/>
+                            <Grid Grid.Row="1" Grid.Column="1" Width="226" Height="28" HorizontalAlignment="Left" Margin="0,6,0,0">
+                                <TextBox Width="210"
+                                         Height="28"
+                                         FontSize="12"
+                                         HorizontalAlignment="Left"
+                                         IsEnabled="{Binding IsUpdateModeEnabled}"
+                                         ToolTip="{Binding Loc[ExistingArchiveIdentifierHint]}"
+                                         Text="{Binding ExistingArchiveIdentifier, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock Style="{StaticResource RequiredDot}"
+                                           HorizontalAlignment="Right"
+                                           Margin="0"
+                                           Visibility="{Binding IsUpdateModeEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                           Foreground="{Binding ExistingArchiveIdentifier, Converter={StaticResource RequiredFieldBrushConverter}}"/>
+                            </Grid>
+
+                            <Label Grid.Row="2" Grid.Column="0" FontSize="12" VerticalContentAlignment="Center" Margin="0,6,0,0" Content="{Binding Loc[UpdateVersionType]}"/>
+                            <ComboBox Grid.Row="2"
+                                      Grid.Column="1"
+                                      Width="210"
+                                      Height="28"
+                                      FontSize="12"
+                                      Margin="0,6,0,0"
+                                      HorizontalAlignment="Left"
+                                      SelectedValuePath="Tag"
+                                      SelectedValue="{Binding SelectedUpdateVersionTypeKey, Mode=TwoWay}"
+                                      IsEnabled="{Binding IsUpdateModeEnabled}">
+                                <ComboBoxItem Tag="Minor" Content="{Binding Loc[UpdateVersionType_Minor]}"/>
+                                <ComboBoxItem Tag="Major" Content="{Binding Loc[UpdateVersionType_Major]}"/>
+                            </ComboBox>
+                        </Grid>
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Top" Margin="-18,22,0,0"
+                                    IsEnabled="{Binding CanEditDuringUpload}">
+                            <Label FontSize="15" Content="{Binding Loc[TargetServers]}"/>
+                            <StackPanel Margin="10,0" Orientation="Vertical">
+                                <CheckBox Content="{Binding Loc[CurrentLoginServer]}" FontSize="15" IsChecked="{Binding UseCurrentLoginServer, Mode=TwoWay}"/>
+                                <Separator Margin="0,5"/>
+                                <CheckBox Content="{Binding Loc[America]}" FontSize="15" IsEnabled="{Binding CanSelectExplicitTargetServers}" IsChecked="{Binding IsUsServer, Mode=TwoWay}"/>
+                                <CheckBox Content="{Binding Loc[Asia]}" FontSize="15" IsEnabled="{Binding CanSelectExplicitTargetServers}" IsChecked="{Binding IsAsiaServer, Mode=TwoWay}"/>
+                                <CheckBox Content="{Binding Loc[Europe]}" FontSize="15" IsEnabled="{Binding CanSelectExplicitTargetServers}" IsChecked="{Binding IsEuropeServer, Mode=TwoWay}"/>
+                                <CheckBox Content="{Binding Loc[HkTw]}" FontSize="15" IsEnabled="{Binding CanSelectExplicitTargetServers}" IsChecked="{Binding IsHkTwServer, Mode=TwoWay}"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Grid.Column="3" Width="360" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="18,20,0,0">
+                            <Button Content="{Binding Loc[StartUpload]}" Width="360" Height="40" FontSize="14" Background="#F59E0B" Foreground="White" BorderThickness="0" FontWeight="SemiBold" Command="{Binding StartUploadCommand}"/>
+                            <Button Content="{Binding Loc[CancelUpload]}" Width="360" Height="34" FontSize="14" Margin="0,8,0,0" Command="{Binding CancelUploadCommand}"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                <Button Content="{Binding Loc[PauseUpload]}" Width="176" Height="34" Command="{Binding PauseUploadCommand}"/>
+                                <Button Content="{Binding Loc[ContinueUpload]}" Width="176" Height="34" Margin="8,0,0,0" Command="{Binding ContinueUploadCommand}"/>
+                            </StackPanel>
+                            <TextBlock Text="{Binding ContinuationMessage}" TextWrapping="Wrap" MaxHeight="110" Foreground="#B45309" Margin="0,6,0,0"/>
+                            <TextBlock Text="{Binding Loc[WindowedModeRecommended]}"
+                                       FontSize="11"
+                                       Foreground="#6B7280"
+                                       TextWrapping="Wrap"
+                                       Margin="0,8,0,0"/>
+                            <Button Content="{Binding Stage1PreflightButtonText}" Width="360" Height="32" FontSize="13" Margin="0,10,0,0" Command="{Binding RunStage1PreflightCommand}" Visibility="Collapsed"/>
+                            <Button Content="{Binding OpenMainMenuProbeButtonText}" Width="360" Height="32" FontSize="13" Margin="0,8,0,0" Command="{Binding RunOpenMainMenuProbeCommand}" Visibility="Collapsed"/>
+                            <Button Content="Open Diagnostics" Width="360" Height="30" FontSize="13" Margin="0,8,0,0" Command="{Binding OpenDiagnosticsDirectoryCommand}" Visibility="Collapsed"/>
+                            <TextBlock FontSize="11"
+                                       Foreground="#4B5563"
+                                       TextWrapping="Wrap"
+                                       Margin="0,4,0,0"
+                                       Text="{Binding DiagnosticsDirectory}"
+                                       Visibility="Collapsed"/>
+                            <Border Margin="0,8,0,0" Padding="8" BorderBrush="#FBBF24" BorderThickness="1" CornerRadius="6" Background="#FFFBEB" Visibility="Collapsed">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="116"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Row="0" Grid.Column="0" FontSize="11" Foreground="#92400E" Text="Probe Success"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="1" FontSize="11" TextWrapping="Wrap" Text="{Binding OpenMainMenuProbeSuccess}"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" FontSize="11" Foreground="#92400E" Text="WinningStrategy"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" FontSize="11" TextWrapping="Wrap" Text="{Binding OpenMainMenuProbeWinningStrategy}"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="0" FontSize="11" Foreground="#92400E" Text="WinningFrameIndex"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="1" FontSize="11" TextWrapping="Wrap" Text="{Binding OpenMainMenuProbeWinningFrameIndex}"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="0" FontSize="11" Foreground="#92400E" Text="QianxingEntry"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="1" FontSize="11" TextWrapping="Wrap" Text="{Binding OpenMainMenuProbeHasQianxingRealmEntry}"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="0" FontSize="11" Foreground="#92400E" Text="PaimonIcon"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="1" FontSize="11" TextWrapping="Wrap" Text="{Binding OpenMainMenuProbeHasWorldPaimonIcon}"/>
+                                    <TextBlock Grid.Row="5" Grid.Column="0" FontSize="11" Foreground="#92400E" Text="Report"/>
+                                    <TextBlock Grid.Row="5" Grid.Column="1" FontSize="11" TextWrapping="Wrap" Text="{Binding OpenMainMenuProbeReportPath}"/>
+                                    <TextBlock Grid.Row="6" Grid.Column="0" FontSize="11" Foreground="#92400E" Text="Summary"/>
+                                    <TextBlock Grid.Row="6" Grid.Column="1" FontSize="11" TextWrapping="Wrap" Text="{Binding OpenMainMenuProbeSummaryPath}"/>
+                                    <TextBlock Grid.Row="7" Grid.Column="0" FontSize="11" Foreground="#B91C1C" Text="Probe Error"/>
+                                    <TextBlock Grid.Row="7" Grid.Column="1" FontSize="11" Foreground="#B91C1C" TextWrapping="Wrap" Text="{Binding OpenMainMenuProbeErrorMessage}"/>
+                                </Grid>
+                            </Border>
+                            <CheckBox Content="Stage1 experimental upload"
+                                      FontSize="12"
+                                      Margin="0,8,0,0"
+                                      Visibility="Collapsed"
+                                      IsEnabled="{Binding CanEditDuringUpload}"
+                                      IsChecked="{Binding UseExperimentalStage1Upload, Mode=TwoWay}"/>
+                            <TextBlock FontSize="11"
+                                       Foreground="#92400E"
+                                       TextWrapping="Wrap"
+                                       Margin="0,4,0,0"
+                                       Text="{Binding ExperimentalStage1UploadStatus}"
+                                       Visibility="Collapsed"/>
+                            <Border Margin="0,8,0,0" Padding="8" BorderBrush="#D1D5DB" BorderThickness="1" CornerRadius="6" Background="#F9FAFB" Visibility="Collapsed">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="88"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Row="0" Grid.Column="0" FontSize="11" Foreground="#4B5563" Text="Ready"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="1" FontSize="11" TextWrapping="Wrap" Text="{Binding Stage1PreflightReadyForStart}"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" FontSize="11" Foreground="#4B5563" Text="RawPage"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" FontSize="11" TextWrapping="Wrap" Text="{Binding Stage1PreflightRawPage}"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="0" FontSize="11" Foreground="#4B5563" Text="GatedPage"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="1" FontSize="11" TextWrapping="Wrap" Text="{Binding Stage1PreflightGatedPage}"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="0" FontSize="11" Foreground="#4B5563" Text="Message"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="1" FontSize="11" TextWrapping="Wrap" Text="{Binding Stage1PreflightMessage}"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="0" FontSize="11" Foreground="#4B5563" Text="Screenshot"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="1" FontSize="11" TextWrapping="Wrap" Text="{Binding Stage1PreflightScreenshotPath}"/>
+                                    <TextBlock Grid.Row="5" Grid.Column="0" FontSize="11" Foreground="#4B5563" Text="Report"/>
+                                    <TextBlock Grid.Row="5" Grid.Column="1" FontSize="11" TextWrapping="Wrap" Text="{Binding Stage1PreflightReportPath}"/>
+                                    <TextBlock Grid.Row="6" Grid.Column="0" FontSize="11" Foreground="#4B5563" Text="Summary"/>
+                                    <TextBlock Grid.Row="6" Grid.Column="1" FontSize="11" TextWrapping="Wrap" Text="{Binding Stage1PreflightSummaryPath}"/>
+                                    <TextBlock Grid.Row="7" Grid.Column="0" FontSize="11" Foreground="#B91C1C" Text="Error"
+                                               Visibility="{Binding HasStage1PreflightError, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    <TextBlock Grid.Row="7" Grid.Column="1" FontSize="11" Foreground="#B91C1C" TextWrapping="Wrap" Text="{Binding Stage1PreflightErrorMessage}"
+                                               Visibility="{Binding HasStage1PreflightError, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                    </ScrollViewer>
+                </GroupBox>
+            </Grid>
+        </TabItem>
+        </TabControl>
+
+        <StackPanel HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Margin="0,8,14,0"
+                    Panel.ZIndex="10"
+                    Orientation="Horizontal">
+            <Label Content="{Binding Loc[Language]}" VerticalContentAlignment="Center" Padding="0,0,8,0"/>
+            <ComboBox Width="150"
+                      Height="28"
+                      ItemsSource="{Binding Loc.Languages}"
+                      DisplayMemberPath="DisplayName"
+                      SelectedValuePath="Code"
+                      SelectedValue="{Binding Loc.CurrentLanguage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+        </Grid>
+    </Grid>
+    </Border>
+</Window>
